@@ -1,0 +1,18 @@
+[
+  {
+      "nombre": "Ana García",
+      "dni": "12345678A",
+      "edad": 25,
+      "correo": "ana@example.com",
+      "altura": "170cm",
+      "peso": "60kg"
+  },
+  {
+      "nombre": "Luis Martínez",
+      "dni": "87654321B",
+      "edad": 30,
+      "correo": "luis@example.com",
+      "altura": "180cm",
+      "peso": "80kg"
+  }
+]

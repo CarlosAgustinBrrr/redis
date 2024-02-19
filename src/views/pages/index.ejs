@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Personas</title>
+</head>
+
+<body>
+  <form method="GET">
+    <label for="nombre">Buscar por nombre:</label>
+    <input type="text" id="nombre" name="nombre">
+    
+    <label for="edadMin">Edad mínima:</label>
+    <input type="number" id="edadMin" name="edadMin" min="0">
+    
+    <label for="edadMax">Edad máxima:</label>
+    <input type="number" id="edadMax" name="edadMax" min="0">
+    
+    <button type="submit">Buscar</button>
+</form>
+
+
+
+  <h1>Agregar Nueva Persona</h1>
+
+  <form id="formCargarPersonas" action="/personas/cargar" method="POST" enctype="multipart/form-data">
+    <label for="archivoPersonas">Cargar personas desde archivo JSON:</label>
+    <input type="file" id="archivoPersonas" name="archivoPersonas" accept=".json">
+    <button type="submit">Cargar Personas</button>
+  </form>
+
+  <form action="/agregar" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br>
+
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" required><br>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" required><br>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo" required><br>
+
+    <label for="altura">Altura:</label>
+    <input type="text" id="altura" name="altura" required><br>
+
+    <label for="peso">Peso:</label>
+    <input type="text" id="peso" name="peso" required><br>
+
+    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas insertar esta persona?');">Agregar
+      Persona</button>
+  </form>
+
+  <h2>Listado de Personas</h2>
+  <ul>
+    <% personas.forEach(persona=> { %>
+      <form action="/personas/actualizar/<%= persona.dni %>" method="POST">
+        <label for="nombre-<%= persona.dni %>">Nombre:</label>
+        <input type="text" id="nombre-<%= persona.dni %>" name="nombre" value="<%= persona.nombre %>" required><br>
+
+        <label for="dni-<%= persona.dni %>">DNI:</label>
+        <input type="text" id="dni-<%= persona.dni %>" name="dni" value="<%= persona.dni %>" required readonly><br>
+
+        <label for="edad-<%= persona.dni %>">Edad:</label>
+        <input type="number" id="edad-<%= persona.dni %>" name="edad" value="<%= persona.edad %>" required><br>
+
+        <label for="correo-<%= persona.dni %>">Correo:</label>
+        <input type="email" id="correo-<%= persona.dni %>" name="correo" value="<%= persona.correo %>" required><br>
+
+        <label for="altura-<%= persona.dni %>">Altura:</label>
+        <input type="text" id="altura-<%= persona.dni %>" name="altura" value="<%= persona.altura %>" required><br>
+
+        <label for="peso-<%= persona.dni %>">Peso:</label>
+        <input type="text" id="peso-<%= persona.dni %>" name="peso" value="<%= persona.peso %>" required><br>
+
+        <button type="submit"
+          onclick="return confirm('¿Estás seguro de que deseas actualizar esta persona?');">Actualizar</button>
+      </form>
+      <form action="/personas/eliminar/<%= persona.dni %>" method="POST" style="display: inline;">
+        <button type="submit"
+          onclick="return confirm('¿Estás seguro de que deseas eliminar esta persona?');">Eliminar</button>
+      </form>
+      <hr>
+      <% }) %>
+  </ul>
+
+  <script>
+    document.getElementById('formCargarPersonas').onsubmit = function (event) {
+      // Mostrar un cuadro de diálogo de confirmación
+      var confirmacion = confirm('¿Desea añadir este JSON?');
+      if (!confirmacion) {
+        // Si el usuario selecciona "Cancelar", prevenir el envío del formulario
+        event.preventDefault();
+      }
+    };
+  </script>
+</body>
+
+</html>
