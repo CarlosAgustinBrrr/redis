@@ -1,0 +1,23 @@
+{
+  "nombre": "Barco1",
+  "tipo": "Velero",
+  "capacidad_pasajeros": 50,
+  "tripulacion": 20,
+  "trayecto": {
+    "origen": "Puerto A",
+    "destino": "Puerto B"
+  },
+  "equipamiento": ["Discoteca", "Piscina", "Spa", "Restaurante"]
+}
+
+{
+  "nombre": "Barco2",
+  "tipo": "Crucero",
+  "capacidad_pasajeros": 200,
+  "tripulacion": 50,
+  "trayecto": {
+    "origen": "Puerto C",
+    "destino": "Puerto D"
+  },
+  "equipamiento": ["Restaurante", "Piscina", "Cine"]
+}
