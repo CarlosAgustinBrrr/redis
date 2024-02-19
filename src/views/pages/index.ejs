@@ -44,10 +44,10 @@
     <label for="correo">Correo:</label>
     <input type="email" id="correo" name="correo" required><br>
 
-    <label for="altura">Altura:</label>
+    <label for="altura">Altura (m):</label>
     <input type="text" id="altura" name="altura" required><br>
 
-    <label for="peso">Peso:</label>
+    <label for="peso">Peso (kg):</label>
     <input type="text" id="peso" name="peso" required><br>
 
     <button type="submit" onclick="return confirm('¿Estás seguro de que deseas insertar esta persona?');">Agregar
@@ -71,10 +71,10 @@
         <input type="email" id="correo-<%= persona.dni %>" name="correo" value="<%= persona.correo %>" required><br>
 
         <label for="altura-<%= persona.dni %>">Altura:</label>
-        <input type="text" id="altura-<%= persona.dni %>" name="altura" value="<%= persona.altura %>" required><br>
+        <input type="text" id="altura-<%= persona.dni %>" name="altura" value="<%= persona.altura %>" required>m<br>
 
         <label for="peso-<%= persona.dni %>">Peso:</label>
-        <input type="text" id="peso-<%= persona.dni %>" name="peso" value="<%= persona.peso %>" required><br>
+        <input type="text" id="peso-<%= persona.dni %>" name="peso" value="<%= persona.peso %>" required>kg<br>
 
         <button type="submit"
           onclick="return confirm('¿Estás seguro de que deseas actualizar esta persona?');">Actualizar</button>

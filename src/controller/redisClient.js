@@ -1,7 +1,6 @@
-// redisClient.js
 import { createClient } from 'redis';
 
-let client;
+var client;
 
 export const getRedisClient = async () => {
   if (!client) {
