@@ -2,111 +2,101 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MongoDB</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Personas</title>
 </head>
 
-<body class="container mt-5">
+<body>
+  <form method="GET">
+    <label for="nombre">Buscar por nombre:</label>
+    <input type="text" id="nombre" name="nombre">
+    
+    <label for="edadMin">Edad mínima:</label>
+    <input type="number" id="edadMin" name="edadMin" min="0">
+    
+    <label for="edadMax">Edad máxima:</label>
+    <input type="number" id="edadMax" name="edadMax" min="0">
+    
+    <button type="submit">Buscar</button>
+</form>
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h1>Registrar Persona</h1>
-                <form id="formularioRegistrar" action="/registrarPersonas" method="POST"
-                    onsubmit="return confirmarImportacion()">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="dni">DNI:</label>
-                            <input type="text" class="form-control" name="dni" id="dni" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="edad">Edad:</label>
-                            <input type="number" class="form-control" name="edad" id="edad" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="correo">Correo:</label>
-                            <input type="email" class="form-control" name="correo" id="correo" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <h1>Importar Personas</h1>
-                <form id="formularioImportar" enctype="multipart/form-data" action="/crearPersonas" method="POST"
-                    onsubmit="return confirmarImportacion()">
-                    <div class="form-group">
-                        <label for="archivoJSON">Selecciona un archivo JSON:</label>
-                        <input type="file" class="form-control-file" name="archivoJSON" id="archivoJSON" accept=".json"
-                            required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Importar</button>
-                </form>
-            </div>
-        </div>
-        <div class="container mt-5">
-            <h1>Lista de Personas</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">DNI</th>
-                        <th scope="col">Edad</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% personas.forEach(persona=> { %>
-                        <tr>
-                            <td>
-                                <%= persona.nombre %>
-                            </td>
-                            <td>
-                                <%= persona.dni %>
-                            </td>
-                            <td>
-                                <%= persona.edad %>
-                            </td>
-                            <td>
-                                <%= persona.correo %>
-                            </td>
-                            <td>
-                                <form action="/eliminarPersona/<%= persona._id %>" method="POST"
-                                    onsubmit="return confirmarEliminar('<%= persona.nombre %>')">
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <% }); %>
-                </tbody>
-            </table>
-        </div>
 
-        <script>
-            function confirmarImportacion() {
-                const confirmacion = confirm("¿Deseas importar los datos del archivo JSON?");
-                return confirmacion;
-            }
-        </script>
-        <script>
-            function confirmarEliminar(nombrePersona) {
-                const confirmacion = confirm(`¿Deseas eliminar el registro de ${nombrePersona}?`);
-                return confirmacion;
-            }
-        </script>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </div>
+  <h1>Agregar Nueva Persona</h1>
+
+  <form id="formCargarPersonas" action="/personas/cargar" method="POST" enctype="multipart/form-data">
+    <label for="archivoPersonas">Cargar personas desde archivo JSON:</label>
+    <input type="file" id="archivoPersonas" name="archivoPersonas" accept=".json">
+    <button type="submit">Cargar Personas</button>
+  </form>
+
+  <form action="/agregar" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br>
+
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" required><br>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" required><br>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo" required><br>
+
+    <label for="altura">Altura:</label>
+    <input type="text" id="altura" name="altura" required><br>
+
+    <label for="peso">Peso:</label>
+    <input type="text" id="peso" name="peso" required><br>
+
+    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas insertar esta persona?');">Agregar
+      Persona</button>
+  </form>
+
+  <h2>Listado de Personas</h2>
+  <ul>
+    <% personas.forEach(persona=> { %>
+      <form action="/personas/actualizar/<%= persona.dni %>" method="POST">
+        <label for="nombre-<%= persona.dni %>">Nombre:</label>
+        <input type="text" id="nombre-<%= persona.dni %>" name="nombre" value="<%= persona.nombre %>" required><br>
+
+        <label for="dni-<%= persona.dni %>">DNI:</label>
+        <input type="text" id="dni-<%= persona.dni %>" name="dni" value="<%= persona.dni %>" required readonly><br>
+
+        <label for="edad-<%= persona.dni %>">Edad:</label>
+        <input type="number" id="edad-<%= persona.dni %>" name="edad" value="<%= persona.edad %>" required><br>
+
+        <label for="correo-<%= persona.dni %>">Correo:</label>
+        <input type="email" id="correo-<%= persona.dni %>" name="correo" value="<%= persona.correo %>" required><br>
+
+        <label for="altura-<%= persona.dni %>">Altura:</label>
+        <input type="text" id="altura-<%= persona.dni %>" name="altura" value="<%= persona.altura %>" required><br>
+
+        <label for="peso-<%= persona.dni %>">Peso:</label>
+        <input type="text" id="peso-<%= persona.dni %>" name="peso" value="<%= persona.peso %>" required><br>
+
+        <button type="submit"
+          onclick="return confirm('¿Estás seguro de que deseas actualizar esta persona?');">Actualizar</button>
+      </form>
+      <form action="/personas/eliminar/<%= persona.dni %>" method="POST" style="display: inline;">
+        <button type="submit"
+          onclick="return confirm('¿Estás seguro de que deseas eliminar esta persona?');">Eliminar</button>
+      </form>
+      <hr>
+      <% }) %>
+  </ul>
+
+  <script>
+    document.getElementById('formCargarPersonas').onsubmit = function (event) {
+      // Mostrar un cuadro de diálogo de confirmación
+      var confirmacion = confirm('¿Desea añadir este JSON?');
+      if (!confirmacion) {
+        // Si el usuario selecciona "Cancelar", prevenir el envío del formulario
+        event.preventDefault();
+      }
+    };
+  </script>
 </body>
+
 </html>

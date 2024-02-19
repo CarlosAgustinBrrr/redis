@@ -3,27 +3,28 @@ import bodyParser from 'body-parser';
 import { join } from 'path';
 import router from './routers/index.js';
 import { fileURLToPath } from 'url';
-import conectarDB from './config/database.js';
 import { createClient } from 'redis';
+import path from 'path';
 
-async function testRedis() {
-    const client = createClient();
-    
-    client.on('error', (err) => console.log('Redis Client Error', err));
-    await client.connect();
+const redisUrl = 'redis://default:sfsoVvdeRpJjCL1czso4pC4inIvgyBxi@redis-12705.c274.us-east-1-3.ec2.cloud.redislabs.com:12705';
 
-    try {
-        console.log('Attempting to fetch from Redis');
-        const result = await client.get('personas');
-        console.log('Result:', result);
-    } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        await client.disconnect();
-    }
+const client = createClient({
+  password: 'sfsoVvdeRpJjCL1czso4pC4inIvgyBxi',
+  socket: {
+      host: 'redis-12705.c274.us-east-1-3.ec2.cloud.redislabs.com',
+      port: 12705
+  }
+});
+
+client.on('connect', () => console.log('Conectado a Redis Cloud exitosamente'));
+client.on('error', (err) => console.log('Error al conectar a Redis:', err));
+
+async function connectRedis() {
+  await client.connect();
 }
 
-testRedis();
+connectRedis();
+
 const app = express();
 
 // Configuraciones
@@ -33,23 +34,25 @@ app.set('json spaces', 2);
 // Set the view engine to ejs
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-    extended: true
+  extended: true
 }));
 
+app.use(express.urlencoded({ extended: true }));
+
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = join(__filename, '..'); // Adjust the path as needed
+const __dirname = path.dirname(__filename);
 
 // Set the views path
-app.set('views', join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-conectarDB();
 
 // Routes
 app.use(router);
 
 // Iniciando el servidor
 app.listen(app.get('port'), () => {
-    console.log(`Server listening on port ${app.get('port')}`);
+  console.log(`Server listening on port ${app.get('port')}`);
 });
 
 app.set('view engine', 'ejs');
