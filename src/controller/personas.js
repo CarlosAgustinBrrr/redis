@@ -15,9 +15,21 @@ const listarPersonas = async (req, res) => {
 const agregarPersona = async (req, res) => {
   try {
     const { nombre, dni, edad, correo, altura, peso } = req.body;
-    const nuevaPersona = new Persona({ nombre, dni, edad, correo, altura, peso });
+
+    let personasFiltradas = await Persona.recuperarTodas(); 
+
+    if (dni || correo) {
+      personasFiltradas = personasFiltradas.filter(persona => persona.dni.toLowerCase().includes(dni.toLowerCase()));
+      personasFiltradas = personasFiltradas.filter(persona => persona.correo.toLowerCase().includes(correo.toLowerCase()));
+    }
+
+    if(personasFiltradas.length > 0){
+      return res.status(400).send('Ya existe una persona con el mismo DNI o correo.');
+    }else{
+      const nuevaPersona = new Persona({ nombre, dni, edad, correo, altura, peso });
+      await Persona.guardar(nuevaPersona);
+    }
     
-    await Persona.guardar(nuevaPersona);
     res.redirect('/'); // Redirecciona a la lista de personas, ajusta según tu ruta de listado
   } catch (error) {
     console.error('Error al agregar persona:', error);

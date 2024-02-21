@@ -14,7 +14,7 @@ const client = createClient({
       host: 'redis-12705.c274.us-east-1-3.ec2.cloud.redislabs.com',
       port: 12705
   }
-});
+}); 
 
 client.on('connect', () => console.log('Conectado a Redis Cloud exitosamente'));
 client.on('error', (err) => console.log('Error al conectar a Redis:', err));
