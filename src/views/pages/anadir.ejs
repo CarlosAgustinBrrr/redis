@@ -38,34 +38,34 @@
       <div class="card-body">
         <h1>Agregar Nueva Persona</h1>
         <form action="/agregar" method="POST">
-          <div class="form-row">
+          <div class="form-row mt-4">
             <div class="col-md-6 mb-3">
               <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" required>
+              <input type="text" class="form-control" id="nombre" name="nombre" maxlength="50" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Por favor, ingresa solo letras y espacios" required>
             </div>
             <div class="col-md-6 mb-3">
               <label for="dni">DNI:</label>
-              <input type="text" class="form-control" id="dni" name="dni" required>
+              <input type="text" class="form-control" id="dni" name="dni" minlength="9" maxlength="9" pattern="[0-9]{8}[A-Za-z]" title="Por favor, ingresa un DNI válido" required>
             </div>
           </div>
           <div class="form-row">
             <div class="col-md-6 mb-3">
               <label for="edad">Edad:</label>
-              <input type="number" class="form-control" id="edad" name="edad" required min="0">
+              <input type="number" class="form-control" id="edad" name="edad" min="0" max="200" required>
             </div>
             <div class="col-md-6 mb-3">
               <label for="correo">Correo:</label>
-              <input type="email" class="form-control" id="correo" name="correo" required>
+              <input type="email" class="form-control" id="correo" name="correo" maxlength="320" required>
             </div>
           </div>
           <div class="form-row">
             <div class="col-md-6 mb-3">
-              <label for="altura">Altura (m):</label>
-              <input type="number" class="form-control" id="altura" name="altura" required min="0">
+              <label for="altura">Altura (cm):</label>
+              <input type="number" class="form-control" id="altura" name="altura" min="0" max="300" required>
             </div>
             <div class="col-md-6 mb-3">
               <label for="peso">Peso (kg):</label>
-              <input type="number" class="form-control" id="peso" name="peso" required min="0">
+              <input type="number" class="form-control" id="peso" name="peso" min="0" max="500" required>
             </div>
           </div>
           <button type="submit" class="btn btn-success btn-block"
