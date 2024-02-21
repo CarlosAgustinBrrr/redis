@@ -75,14 +75,13 @@ const agregarJson = async (req, res) => {
     if (Array.isArray(personas)) {
       for (const persona of personas) {
         if (
-          !persona.nombre || persona.nombre.trim() === '' ||
-          !persona.dni || persona.dni.trim() === '' ||
-          !persona.edad || typeof persona.edad !== 'number' ||
-          !persona.correo || persona.correo.trim() === '' ||
-          !persona.altura || typeof persona.altura !== 'number' ||
-          !persona.peso || typeof persona.peso !== 'number' ||
-          persona.edad < 0 || persona.altura < 0 || persona.peso < 0
-      ) {
+          !persona.nombre || persona.nombre.trim() === '' || persona.nombre.length > 75 ||
+          !persona.dni || persona.dni.trim() === '' || persona.dni.length > 75 ||
+          !persona.edad || typeof persona.edad !== 'number' || persona.edad < 0 || persona.edad > 1000 ||
+          !persona.correo || persona.correo.trim() === '' || persona.correo.length < 75 ||
+          !persona.altura || typeof persona.altura !== 'number' || persona.altura < 0 || persona.altura > 1000 ||
+          !persona.peso || typeof persona.peso !== 'number' || persona.peso < 0 || persona.peso > 1000
+      ) { 
           res.status(400).send("Los campos 'nombre', 'dni', 'edad', 'correo', 'altura' y 'peso' son obligatorios. " +
           "Compruebe que los datos estan en el fomato correcto ni que los numeros sean negativos");
           return;
