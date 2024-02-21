@@ -5,31 +5,117 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listado de Personas</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #343a40; /* Color de fondo oscuro */
+      color: white; /* Color de texto */
+    }
+
+    .form-control {
+      background-color: #343a40; /* Color de fondo oscuro para los formularios */
+      color: white; /* Color de texto */
+      border: 1px solid #6c757d; /* Color de borde gris */
+    }
+
+    h1,
+    h2 {
+      color: #ffc107; /* Color de texto amarillo */
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    hr {
+      border-top: 1px solid #6c757d; /* Color de línea gris */
+    }
+
+    .btn-primary {
+      background-color: #ffc107; /* Color de fondo amarillo para botones primarios */
+      border-color: #ffc107; /* Color de borde amarillo para botones primarios */
+    }
+
+    .btn-primary:hover {
+      background-color: #ffca28; /* Color de fondo amarillo claro al pasar el ratón por encima */
+      border-color: #ffca28; /* Color de borde amarillo claro al pasar el ratón por encima */
+    }
+
+    .btn-danger {
+      background-color: #dc3545; /* Color de fondo rojo para botones de peligro */
+      border-color: #dc3545; /* Color de borde rojo para botones de peligro */
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333; /* Color de fondo rojo oscuro al pasar el ratón por encima */
+      border-color: #bd2130; /* Color de borde rojo oscuro al pasar el ratón por encima */
+    }
+  </style>
 </head>
 
 <body>
-  <form method="GET">
-    <label for="nombre">Buscar por nombre:</label>
-    <input type="text" id="nombre" name="nombre">
-    
-    <label for="edadMin">Edad mínima:</label>
-    <input type="number" id="edadMin" name="edadMin" min="0">
-    
-    <label for="edadMax">Edad máxima:</label>
-    <input type="number" id="edadMax" name="edadMax" min="0">
-    
-    <button type="submit">Buscar</button>
-</form>
+  <div class="container">
+    <form method="GET" class="row">
+      <div class="form-group col-md-6">
+        <label for="nombre">Buscar por nombre:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="edadMin">Edad mínima:</label>
+        <input type="number" id="edadMin" name="edadMin" min="0" class="form-control" placeholder="Edad mínima">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="edadMax">Edad máxima:</label>
+        <input type="number" id="edadMax" name="edadMax" min="0" class="form-control" placeholder="Edad máxima">
+      </div>
+      <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </form>
 
+    <h1>Agregar Nueva Persona</h1>
 
+    <form id="formCargarPersonas" action="/personas/cargar" method="POST" enctype="multipart/form-data" class="row">
+      <div class="form-group col-md-6">
+        <label for="archivoPersonas">Cargar personas desde archivo JSON:</label>
+        <input type="file" id="archivoPersonas" name="archivoPersonas" accept=".json" class="form-control-file">
+      </div>
+      <div class="form-group col-md-6">
+        <button type="submit" class="btn btn-primary">Cargar Personas</button>
+      </div>
+    </form>
 
-  <h1>Agregar Nueva Persona</h1>
-
-  <form id="formCargarPersonas" action="/personas/cargar" method="POST" enctype="multipart/form-data">
-    <label for="archivoPersonas">Cargar personas desde archivo JSON:</label>
-    <input type="file" id="archivoPersonas" name="archivoPersonas" accept=".json">
-    <button type="submit">Cargar Personas</button>
-  </form>
+    <form action="/agregar" method="POST" class="row">
+      <div class="form-group col-md-6">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required class="form-control" placeholder="Nombre">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" required class="form-control" placeholder="DNI">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required class="form-control" placeholder="Edad">
+      </div>
+      <div class="form-group col-md-9">
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required class="form-control" placeholder="Correo">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="altura">Altura:</label>
+        <input type="text" id="altura" name="altura" required class="form-control" placeholder="Altura">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="peso">Peso:</label>
+        <input type="text" id="peso" name="peso" required class="form-control" placeholder="Peso">
+      </div>
+      <div class="form-group col-md-4">
+        <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro de que deseas insertar esta persona?');">Agregar Persona</button>
+      </div>
+    </form>
 
   <form action="/agregar" method="POST">
     <label for="nombre">Nombre:</label>
@@ -86,6 +172,11 @@
       <hr>
       <% }) %>
   </ul>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <script>
     document.getElementById('formCargarPersonas').onsubmit = function (event) {
