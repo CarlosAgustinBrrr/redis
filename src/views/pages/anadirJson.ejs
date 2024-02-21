@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Añadir Personas desde JSON</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-custom {
+      border-radius: 20px;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">😵‍💫👽😶‍🌫️Personas Curiosas😵‍💫👽😶‍🌫️</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/addJson">Añadir Personas por JSON<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/add">Añadir Personas por Formulario<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  <div class="container mb-5 mt-2">
+    <div class="card card-custom mb-4 mt-4">
+      <div class="card-body">
+        <h1>Agregar Personas desde JSON</h1>
+        <form id="formCargarPersonas" action="/personas/cargar" method="POST" enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="archivoPersonas" name="archivoPersonas" accept=".json">
+                  <label class="custom-file-label" for="archivoPersonas">Seleccionar archivo JSON</label>
+                </div>
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-primary">Cargar Personas</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr>
+        <div class="form-group">
+          <label for="jsonContent">Contenido del JSON:</label>
+          <textarea class="form-control" id="jsonContent" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer bg-dark text-white fixed-bottom py-2">
+    <div class="container text-center">
+      <span>😵‍💫👽😶‍🌫️Personas Curiosas😵‍💫👽😶‍🌫️ | Todos los derechos reservados © 2024</span>
+    </div>
+  </footer>
+  <!-- Bootstrap JS y jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('formCargarPersonas').onsubmit = function (event) {
+      // Mostrar un cuadro de diálogo de confirmación
+      var confirmacion = confirm('¿Desea añadir este JSON?');
+      if (!confirmacion) {
+        // Si el usuario selecciona "Cancelar", prevenir el envío del formulario
+        event.preventDefault();
+      }
+    };
+
+    document.getElementById('archivoPersonas').addEventListener('change', function (event) {
+      var file = event.target.files[0];
+      var fileName = file.name;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var content = e.target.result;
+        document.getElementById('jsonContent').value = content;
+      };
+      reader.readAsText(file);
+      
+      // Actualizar el label con el nombre del archivo seleccionado
+      var label = document.getElementById('archivoPersonas').nextElementSibling;
+      label.innerText = fileName;
+    });
+  </script>
+</body>
+
+</html>
