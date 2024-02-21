@@ -17,7 +17,13 @@ const upload = multer({ dest: 'uploads/' })
 //     }
 // });
 
-router.get('/', listarOFiltrarPersonas)
+router.get('/', listarOFiltrarPersonas);
+router.get('/add', (req, res) => {
+    res.render('pages/anadir')
+});
+router.get('/addJson', (req, res) => {
+    res.render('pages/anadirJson')
+});
 router.post('/agregar', agregarPersona);
 router.post('/personas/eliminar/:dni', eliminarPersona);
 router.post('/personas/actualizar/:dni', actualizarPersona);

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Personas</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-custom {
+      border-radius: 20px;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">😵‍💫👽😶‍🌫️Personas Curiosas😵‍💫👽😶‍🌫️</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/addJson">Añadir Personas por JSON<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/add">Añadir Personas por Formulario<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container mb-5 mt-2">
+    <div class="card card-custom mt-4">
+      <div class="card-body">
+        <h1>Agregar Nueva Persona</h1>
+        <form action="/agregar" method="POST">
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="dni">DNI:</label>
+              <input type="text" class="form-control" id="dni" name="dni" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="edad">Edad:</label>
+              <input type="number" class="form-control" id="edad" name="edad" required min="0">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="correo">Correo:</label>
+              <input type="email" class="form-control" id="correo" name="correo" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="altura">Altura (m):</label>
+              <input type="number" class="form-control" id="altura" name="altura" required min="0">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="peso">Peso (kg):</label>
+              <input type="number" class="form-control" id="peso" name="peso" required min="0">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-block"
+            onclick="return confirm('¿Estás seguro de que deseas insertar esta persona?');">Agregar Persona</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer class="footer bg-dark text-white fixed-bottom py-2">
+    <div class="container text-center">
+      <span>😵‍💫👽😶‍🌫️Personas Curiosas😵‍💫👽😶‍🌫️ | Todos los derechos reservados © 2024</span>
+    </div>
+  </footer>
+  <!-- Bootstrap JS y jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  </script>
+</body>
+
+</html>
