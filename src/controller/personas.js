@@ -72,30 +72,56 @@ const eliminarPersona = async (req, res) => {
 
 const agregarJson = async (req, res) => {
   try {
-      const archivoPath = req.file.path;
-
-      // Leer el contenido del archivo
-      const contenidoArchivo = fs.readFileSync(archivoPath, 'utf8');
-      const personas = JSON.parse(contenidoArchivo);
-
-      // Asegúrate de que el archivo JSON contiene un array de personas
-      if (Array.isArray(personas)) {
-          // Procesa cada persona en el array
-          for (const persona of personas) {
-              await Persona.guardar(new Persona(persona));
-          }
-          res.redirect('/');
-      } else {
-          res.status(400).send("El archivo JSON debe contener un array de personas.");
+    const archivoPath = req.file.path;
+    const contenidoArchivo = fs.readFileSync(archivoPath, 'utf8');
+    const personas = JSON.parse(contenidoArchivo);
+    if (Array.isArray(personas)) {
+      for (const persona of personas) {
+        if (
+          !persona.nombre || persona.nombre.trim() === '' || persona.nombre.length > 75 ||
+          !persona.dni || persona.dni.trim() === '' || persona.dni.length > 75 ||
+          !persona.edad || typeof persona.edad !== 'number' || persona.edad < 0 || persona.edad > 1000 ||
+          !persona.correo || persona.correo.trim() === '' || persona.correo.length < 75 ||
+          !persona.altura || typeof persona.altura !== 'number' || persona.altura < 0 || persona.altura > 1000 ||
+          !persona.peso || typeof persona.peso !== 'number' || persona.peso < 0 || persona.peso > 1000
+      ) { 
+          res.status(400).send("Los campos 'nombre', 'dni', 'edad', 'correo', 'altura' y 'peso' son obligatorios. " +
+          "Compruebe que los datos estan en el fomato correcto ni que los numeros sean negativos");
+          return;
+        }
+        let personasFiltradas = await Persona.recuperarTodas(); 
+        let dniNuevo = persona.dni;
+        let correoNuevo = persona.correo;
+        if (dniNuevo || correoNuevo) {
+          personasFiltradas = personasFiltradas.filter(p => p.dni.toLowerCase() === dniNuevo.toLowerCase() || p.correo.toLowerCase() === correoNuevo.toLowerCase());
+        }
+        if(personasFiltradas.length > 0){
+          return res.status(400).send('Ya existe una persona con el mismo DNI o correo.');
+        }else{
+          const nuevaPersona = new Persona({
+            nombre: persona.nombre,
+            dni: persona.dni,
+            edad: persona.edad,
+            correo: persona.correo,
+            altura: persona.altura,
+            peso: persona.peso
+        });
+          console.log(nuevaPersona)
+          await Persona.guardar(nuevaPersona);
+        }
       }
-
-      // Opcional: eliminar el archivo después de procesarlo
-      fs.unlinkSync(archivoPath);
+      res.redirect('/');
+    } else {
+      res.status(400).send("El archivo JSON debe contener un array de personas.");
+    }
+    fs.unlinkSync(archivoPath);
   } catch (error) {
-      console.error('Error al cargar el archivo:', error);
-      res.status(500).send("Error al procesar el archivo.");
+    console.error('Error al cargar el archivo:', error);
+    res.status(500).send("Error al procesar el archivo.");
   }
 };
+
+
 
 const filtrarPersonas = async (req, res) => {
   try {
