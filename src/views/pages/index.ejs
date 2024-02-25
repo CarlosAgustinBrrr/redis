@@ -29,8 +29,11 @@
       width: 100%; 
     }
     /* Ajuste de anchos de columna */
+    .custom-table th:nth-child(1), .custom-table td:nth-child(1) {
+      width: 32%; /* Columna de Nombre */
+    }
     .custom-table th:nth-child(2), .custom-table td:nth-child(2) {
-      width: 25%; /* Columna de Nombre */
+      width: 13%; /* Columna de Nombre */
     }
     .custom-table th:nth-child(3), .custom-table td:nth-child(3) {
       width: 8%; /* Columna de DNI */
@@ -45,9 +48,12 @@
     .custom-table th:nth-child(7), .custom-table td:nth-child(7) {
       width: 4%; /* Columnas de altura y peso */
     }
-    .custom-table th:nth-child(8), .custom-table td:nth-child(8) {
-      width: 8%; /* Columna de Acciones */
+
+    .custom-table th:nth-child(8), .custom-table td:nth-child(8),
+    .custom-table th:nth-child(9), .custom-table td:nth-child(9) {
+      width: 4%; /* Columnas de altura y peso */
     }
+    
   </style>
 </head>
 <body>
