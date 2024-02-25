@@ -45,8 +45,10 @@ const actualizarPersona = async (req, res) => {
     const personaActualizada = await Persona.actualizar(dni, datosActualizados);
 
     if (personaActualizada) {
+      console.log('Persona actualizada:', personaActualizada);
       res.redirect('/');
     } else {
+      console.log('Persona no encontrada');
       res.status(404).send('Persona no encontrada');
     }
   } catch (error) {
@@ -60,6 +62,7 @@ const eliminarPersona = async (req, res) => {
   try {
     const { dni } = req.params;
     await Persona.eliminar(dni);
+    console.log('Persona eliminada:', dni);
     res.redirect('/');
   } catch (error) {
     console.error('Error al eliminar persona:', error);
