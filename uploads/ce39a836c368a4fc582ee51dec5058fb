@@ -1,0 +1,10 @@
+[
+  {
+    "nombre": "Luis2 Ms",
+    "dni": "82351221B",
+    "edad": 30,
+    "correo": "luis21@example.com",
+    "altura": "180",
+    "peso": "80"
+  }
+]

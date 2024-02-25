@@ -1,0 +1,10 @@
+[
+  {
+    "nombre": "KIosko",
+    "dni": "82351221L",
+    "edad": 30,
+    "correo": "luis2156@example.com",
+    "altura": 180,
+    "peso": 80
+  }
+]
