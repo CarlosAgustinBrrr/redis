@@ -1,16 +1,6 @@
 import Persona from '../models/personaModel.js';
 import fs from 'fs';
 
-const listarPersonas = async (req, res) => {
-  try {
-      const personas = await Persona.recuperarTodas(); // Suponiendo que esta operación es asíncrona
-      res.render('pages/index.ejs', { personas });
-  } catch (error) {
-      console.error('Error en la ruta :', error);
-      res.status(500).send('Error al recuperar las personas');
-  }
-};
-
 // Nuevo controlador para añadir una persona
 const agregarPersona = async (req, res) => {
   try {
@@ -29,7 +19,7 @@ const agregarPersona = async (req, res) => {
       const nuevaPersona = new Persona({ nombre, dni, edad, correo, altura, peso });
       await Persona.guardar(nuevaPersona);
     }
-    
+    console.log('Persona agregada:', nuevaPersona);
     res.redirect('/'); // Redirecciona a la lista de personas, ajusta según tu ruta de listado
   } catch (error) {
     console.error('Error al agregar persona:', error);
@@ -121,32 +111,6 @@ const agregarJson = async (req, res) => {
   }
 };
 
-
-
-const filtrarPersonas = async (req, res) => {
-  try {
-      // Capturar los parámetros de búsqueda y filtro de req.query
-      const { nombre, edadMin, edadMax } = req.query;
-      let personasFiltradas = await Persona.recuperarTodas(); // Suponiendo que este método ya existe
-
-      // Filtrar por nombre si se proporciona
-      if (nombre) {
-          personasFiltradas = personasFiltradas.filter(persona => persona.nombre.toLowerCase().includes(nombre.toLowerCase()));
-      }
-
-      // Filtrar por rango de edad si se proporcionan ambos valores
-      if (edadMin !== undefined && edadMax !== undefined) {
-          personasFiltradas = personasFiltradas.filter(persona => persona.edad >= edadMin && persona.edad <= edadMax);
-      }
-
-      // Enviar los resultados filtrados a la vista
-      res.render('tuVistaDeListado.ejs', { personas: personasFiltradas });
-  } catch (error) {
-      console.error('Error al filtrar personas:', error);
-      res.status(500).send('Error al recuperar las personas');
-  }
-};
-
 const listarOFiltrarPersonas = async (req, res) => {
   try {
       let personas = await Persona.recuperarTodas(); // Asumiendo que este método devuelve todas las personas
@@ -170,5 +134,5 @@ const listarOFiltrarPersonas = async (req, res) => {
   }
 };
 
-export { listarPersonas, agregarPersona, actualizarPersona, eliminarPersona, agregarJson, filtrarPersonas, listarOFiltrarPersonas };
+export { agregarPersona, actualizarPersona, eliminarPersona, agregarJson, listarOFiltrarPersonas };
 
