@@ -71,7 +71,7 @@ const agregarJson = async (req, res) => {
           !persona.nombre || persona.nombre.trim() === '' || persona.nombre.length > 50 ||
           !persona.dni || persona.dni.trim() === '' || persona.dni.length > 9 ||
           !persona.edad || typeof persona.edad !== 'number' || persona.edad < 0 || persona.edad > 200 ||
-          !persona.correo || persona.correo.trim() === '' || persona.correo.length < 320 ||
+          !persona.correo || persona.correo.trim() === '' || persona.correo.length > 320 ||
           !persona.altura || typeof persona.altura !== 'number' || persona.altura < 0 || persona.altura > 300 ||
           !persona.peso || typeof persona.peso !== 'number' || persona.peso < 0 || persona.peso > 500
       ) { 
